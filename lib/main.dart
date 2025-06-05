@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         title: 'MiniMart App',
         theme: ThemeData(
           primaryColor: Color(0xFF1E88E5),
-          scaffoldBackgroundColor: Color.fromARGB(239, 240, 237, 237),
+          scaffoldBackgroundColor: Color(0xFFfbfbfb),
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         ),
         debugShowCheckedModeBanner: false,

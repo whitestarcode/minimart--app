@@ -12,14 +12,14 @@ class ElevatedButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed:onPressed,
+      onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        minimumSize: Size(327, 50),
+        minimumSize: Size(343, 40),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         backgroundColor: Theme.of(context).primaryColor,
         foregroundColor: Colors.white,
       ),
-      child: Text(label ),
+      child: Text(label),
     );
   }
 }

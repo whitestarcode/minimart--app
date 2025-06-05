@@ -10,7 +10,7 @@ List<Product> sampleProducts = [
     color: 'Teal',
     storage: '128GB',
     description:
-        "This pre-owned product is not Apple certified, but has been professionally inspected, tested and cleaned by Amazon-qualified suppliers.There will be no visible cosmetic imperfections when held at an arm’s length. There will be no visible cosmetic imperfections when held at an arm’s length.",
+        "This pre-owned product is not Apple certified, but has been professionally inspected, tested and cleaned by Amazon-qualified suppliers;There will be no visible cosmetic imperfections, when held at an arm’s length  There will be no visible cosmetic imperfections when held at an arm’s length.",
   ),
   Product(
     id: '2',

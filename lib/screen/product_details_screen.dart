@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:minimart_app/constants/app_images.dart';
 import 'package:minimart_app/constants/colors.dart';
 import 'package:minimart_app/models/product.dart';
+import 'package:minimart_app/provider/carts_provider.dart';
 import 'package:minimart_app/provider/favorites_provider.dart';
 import 'package:minimart_app/widget/elevated_button_widget.dart';
 import 'package:provider/provider.dart';
@@ -14,17 +15,16 @@ class ProductDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kBackgroundColor,
       body: Builder(
         builder: (context) => product == null
-            ? Center(child: Text('No product selected'))
+            ? const Center(child: Text('No product selected'))
             : SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
                     Container(
-                      color: Colors.white,
+                      color: kBackgroundColor,
                       child: Column(
                         children: [
                           Padding(
@@ -35,48 +35,64 @@ class ProductDetailsScreen extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Image.asset(AppImages.logo),
-                                Text(
-                                  "DELIVERY ADDRESS",
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w600,
+                                Image.asset(AppImages.logo, width: 50),
+                                Flexible(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: const [
+                                      SizedBox(height: 20),
+                                      Text(
+                                        "DELIVERY ADDRESS",
+                                        style: TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w600,
+                                          color: headerTextColor,
+                                        ),
+                                      ),
+                                      SizedBox(height: 10),
+                                      Text(
+                                        "Umuezike Road, Oyo State",
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w600,
+                                          color: headerTextColor,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                Image.asset(AppImages.notificationIcon),
+                                Image.asset(
+                                  AppImages.notificationIcon,
+                                  width: 24,
+                                ),
                               ],
                             ),
                           ),
-                          SizedBox(height: 10),
-                          Center(
-                            child: Text(
-                              "Umuezike Road, Oyo State",
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 20),
-
-                          Divider(),
+                          const SizedBox(height: 5),
+                          const Divider(),
                           Padding(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 15,
-                              vertical: 10,
+                              vertical: 5,
                             ),
                             child: Row(
                               children: [
                                 GestureDetector(
                                   onTap: () => Navigator.pop(context),
-                                  child: Image.asset(AppImages.arrowLeft),
+                                  child: Image.asset(
+                                    AppImages.arrowLeft,
+                                    width: 24,
+                                  ),
                                 ),
-                                SizedBox(width: 8),
-                                Text(
+                                const SizedBox(width: 8),
+                                const Text(
                                   "Go back",
                                   style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w700,
+                                    color: textColor,
                                   ),
                                 ),
                               ],
@@ -85,12 +101,12 @@ class ProductDetailsScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(height: 10),
+
                     Container(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         border: Border(
-                          top: BorderSide(width: 0.1),
-                          bottom: BorderSide(width: 0.1),
+                          top: BorderSide(width: 1, color: borderColor),
+                          bottom: BorderSide(width: 1, color: borderColor),
                         ),
                       ),
                       child: Padding(
@@ -114,8 +130,11 @@ class ProductDetailsScreen extends StatelessWidget {
                                     child: Image.asset(
                                       product!.imageUrl,
                                       width: double.infinity,
-                                      height: 300,
+                                      height: 332,
                                       fit: BoxFit.cover,
+                                      errorBuilder:
+                                          (context, error, stackTrace) =>
+                                              const Icon(Icons.error),
                                     ),
                                   ),
                                   Positioned(
@@ -127,14 +146,14 @@ class ProductDetailsScreen extends StatelessWidget {
                                           product!,
                                         );
                                         return IconButton(
-                                          icon: Icon(
-                                            isFavorite
-                                                ? Icons.favorite
-                                                : Icons.favorite_border,
-                                            color: isFavorite
-                                                ? Colors.red
-                                                : Colors.grey,
+                                          icon: Image(
+                                            image: AssetImage(
+                                              isFavorite
+                                                  ? AppImages.redHeartIcon
+                                                  : AppImages.heartIcon,
+                                            ),
                                           ),
+
                                           onPressed: () {
                                             Provider.of<FavoriteProvider>(
                                               context,
@@ -148,38 +167,45 @@ class ProductDetailsScreen extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            SizedBox(height: 16),
+
                             Row(
                               children: [
-                                Text(
-                                  product!.title,
-                                  style: TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.black,
+                                Flexible(
+                                  child: Text(
+                                    product!.title,
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.black,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
                                   ),
                                 ),
-                                Text(
-                                  '${product!.storage} | ${product!.color}',
-                                  style: TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.black,
+                                const SizedBox(width: 8),
+                                Flexible(
+                                  child: Text(
+                                    '${product!.storage} | ${product!.color}',
+                                    style: const TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w400,
+                                      color: textColor,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
                                   ),
                                 ),
                               ],
                             ),
-
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                             Text(
                               '\$${product!.price}',
-                              style: TextStyle(
-                                fontSize: 32.75,
+                              style: const TextStyle(
+                                fontSize: 28,
                                 fontWeight: FontWeight.w700,
-                                color: Colors.black,
+                                color: textColor,
                               ),
                             ),
-
                             if (product!.description != null &&
                                 product!.description!.isNotEmpty)
                               Padding(
@@ -187,7 +213,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
+                                    const Text(
                                       'About this item',
                                       style: TextStyle(
                                         fontSize: 14,
@@ -195,15 +221,55 @@ class ProductDetailsScreen extends StatelessWidget {
                                         color: descriptionTextColor,
                                       ),
                                     ),
-                                    SizedBox(height: 4),
-                                    Text(
-                                      product!.description!,
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400,
-                                        color: descriptionTextColor,
-                                      ),
-                                    ),
+                                    ...product!.description!
+                                        .split(';')
+                                        .map((sentence) => sentence.trim())
+                                        .where(
+                                          (sentence) => sentence.isNotEmpty,
+                                        )
+                                        .map(
+                                          (sentence) => Padding(
+                                            padding: const EdgeInsets.only(
+                                              top: 4.0,
+                                            ),
+                                            child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Container(
+                                                  margin: const EdgeInsets.only(
+                                                    top: 4,
+                                                    right: 8,
+                                                  ),
+                                                  width: 4,
+                                                  height: 4,
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                        shape: BoxShape.circle,
+                                                        color:
+                                                            descriptionTextColor,
+                                                      ),
+                                                ),
+                                                Expanded(
+                                                  child: Text(
+                                                    sentence.replaceAll(
+                                                      RegExp(r'\.*$'),
+                                                      '',
+                                                    ),
+                                                    style: const TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      color:
+                                                          descriptionTextColor,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        )
+                                        .toList(),
                                   ],
                                 ),
                               ),
@@ -211,25 +277,28 @@ class ProductDetailsScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     Center(
                       child: ElevatedButtonWidget(
                         label: "Add to Cart",
                         onPressed: () {
+                          Provider.of<CartProvider>(
+                            context,
+                            listen: false,
+                          ).addToCart(product!);
                           ScaffoldMessenger.of(context).showMaterialBanner(
                             MaterialBanner(
-                              padding: EdgeInsets.zero,
+                              padding: const EdgeInsets.all(8),
                               content: DecoratedBox(
                                 decoration: BoxDecoration(
-                                  border: Border(
+                                  border: const Border(
                                     left: BorderSide(
                                       width: 3,
                                       color: Colors.green,
                                     ),
                                   ),
                                   borderRadius: BorderRadius.circular(8),
-                                  color: Theme.of(context).primaryColor,
+                                  color: kBackgroundColor,
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
@@ -240,27 +309,28 @@ class ProductDetailsScreen extends StatelessWidget {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.check,
-                                            color: Colors.white,
-                                            size: 20,
-                                          ),
-                                          SizedBox(width: 8),
-                                          Text(
-                                            'Item has been added to cart',
-                                            style: TextStyle(
-                                              color: Colors.white,
+                                      Flexible(
+                                        child: Row(
+                                          children: [
+                                            Image.asset(
+                                              AppImages.checkCircle,
+                                              width: 24,
                                             ),
-                                          ),
-                                        ],
+                                            const SizedBox(width: 8),
+                                            const Text(
+                                              'Item has been added to cart',
+                                              style: TextStyle(
+                                                color: textColor,
+                                              ),
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                       IconButton(
-                                        icon: Icon(
-                                          Icons.close,
-                                          color: Colors.white,
-                                          size: 20,
+                                        icon: Image.asset(
+                                          AppImages.close,
+                                          width: 24,
                                         ),
                                         onPressed: () {
                                           ScaffoldMessenger.of(
@@ -272,11 +342,10 @@ class ProductDetailsScreen extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              actions: [SizedBox.shrink()],
+                              actions: const [SizedBox.shrink()],
                             ),
                           );
-
-                          Future.delayed(Duration(seconds: 2), () {
+                          Future.delayed(const Duration(seconds: 2), () {
                             ScaffoldMessenger.of(
                               context,
                             ).hideCurrentMaterialBanner();
@@ -284,6 +353,7 @@ class ProductDetailsScreen extends StatelessWidget {
                         },
                       ),
                     ),
+                    const SizedBox(height: 30),
                   ],
                 ),
               ),
