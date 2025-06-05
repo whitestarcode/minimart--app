@@ -1,43 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:minimart_app/models/product.dart';
 
-class CartProvider extends ChangeNotifier {
-  List<Product> cartItem = [];
+class CartProvider with ChangeNotifier {
+  final Map<Product, int> _items = {};
 
-  List<Product> get cartItems => cartItem;
+  Map<Product, int> get items => Map.unmodifiable(_items);
 
-  int get cartCount => cartItem.fold(0, (sum, item) => sum + item.quantity);
-
+  int get cartCount => _items.values.fold(0, (sum, qty) => sum + qty);
   void addToCart(Product product) {
-    var existingProduct = cartItem.firstWhere(
-      (item) => item.id == product.id,
-      orElse: () => product,
-    );
-    if (cartItem.contains(existingProduct)) {
-      existingProduct.quantity++;
+    if (_items.containsKey(product)) {
+      _items[product] = _items[product]! + 1;
     } else {
-      product.quantity = 1;
-      cartItem.add(product);
-    }
-    notifyListeners();
-  }
-
-  void incrementQuantity(Product product) {
-    product.quantity++;
-    notifyListeners();
-  }
-
-  void decrementQuantity(Product product) {
-    if (product.quantity > 1) {
-      product.quantity--;
-    } else {
-      cartItem.remove(product);
+      _items[product] = 1;
     }
     notifyListeners();
   }
 
   void removeFromCart(Product product) {
-    cartItem.remove(product);
+    _items.remove(product);
     notifyListeners();
   }
+
+  void increaseQuantity(Product product) {
+    if (_items.containsKey(product)) {
+      _items[product] = _items[product]! + 1;
+      notifyListeners();
+    }
+  }
+
+  void decreaseQuantity(Product product) {
+    if (_items.containsKey(product)) {
+      if (_items[product]! > 1) {
+        _items[product] = _items[product]! - 1;
+      } else {
+        _items.remove(product);
+      }
+      notifyListeners();
+    }
+  }
+
+  void clearCart() {
+    _items.clear();
+    notifyListeners();
+  }
+
+  double get total => _items.entries.fold(
+    0,
+    (sum, entry) => sum + (entry.key.price * entry.value),
+  );
 }

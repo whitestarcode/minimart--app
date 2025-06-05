@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:minimart_app/constants/app_images.dart';
 import 'package:minimart_app/constants/colors.dart';
 import 'package:minimart_app/models/products_model.dart';
-
 import 'package:minimart_app/screen/product_details_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -16,12 +15,11 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kBackgroundColor,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Container(
               color: kBackgroundColor,
               child: Column(
@@ -34,49 +32,61 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Image.asset(AppImages.logo),
-                        Text(
-                          "DELIVERY ADDRESS",
-                          style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.w600,
+                        Image.asset(AppImages.logo, width: 50),
+                        Flexible(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              SizedBox(height: 20),
+                              Text(
+                                "DELIVERY ADDRESS",
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w600,
+                                  color: headerTextColor,
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                              Text(
+                                "Umuezike Road, Oyo State",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                  color: headerTextColor,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              ),
+                            ],
                           ),
                         ),
-                        Image.asset(AppImages.notificationIcon),
+                        Image.asset(AppImages.notificationIcon, width: 24),
                       ],
                     ),
                   ),
-                  SizedBox(height: 10),
-                  Center(
-                    child: Text(
-                      "Umuezike Road, Oyo State",
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 5),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      height: 36,
+                      width: 342,
+                      padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(color: Colors.grey, width: 0.2),
                       ),
-                      child: TextField(
+                      child: const TextField(
                         decoration: InputDecoration(
                           hintText: 'Search...',
                           border: InputBorder.none,
-                          icon: Image.asset(AppImages.searchIcon),
+                          icon: Image(image: AssetImage(AppImages.searchIcon)),
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(height: 15),
-                  Divider(),
+                  const SizedBox(height: 5),
+                  const Divider(),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 15,
@@ -84,8 +94,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     child: Row(
                       children: [
-                        Image.asset(AppImages.arrowLeft),
-                        Text(
+                        Image.asset(AppImages.arrowLeft, width: 24),
+                        const Text(
                           "Technology",
                           style: TextStyle(
                             fontSize: 18,
@@ -99,26 +109,38 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Smartphones, Laptops  & \n Accessories",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-                  ),
-
-                  SizedBox(
-                    height: 700,
-                    child: GridView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 0.75,
-                        crossAxisSpacing: 16,
-                        mainAxisSpacing: 16,
+            Container(
+              decoration: const BoxDecoration(
+                border: Border(top: BorderSide(width: 1, color: borderColor)),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  top: 10,
+                  bottom: 10,
+                  right: 20,
+                  left: 20,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Smartphones, Laptops  & \n Accesories",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                        color: textColor,
                       ),
+                    ),
+                    GridView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 0.85,
+                            crossAxisSpacing: 16,
+                            mainAxisSpacing: 16,
+                          ),
                       itemCount: sampleProducts.length,
                       itemBuilder: (context, index) {
                         final product = sampleProducts[index];
@@ -147,7 +169,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: Image.asset(
                                       product.imageUrl,
                                       width: double.infinity,
-                                      fit: BoxFit.cover,
+                                      fit: BoxFit.fill,
+                                      errorBuilder:
+                                          (context, error, stackTrace) =>
+                                              const Icon(Icons.error),
                                     ),
                                   ),
                                 ),
@@ -155,8 +180,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               Expanded(
                                 flex: 1,
                                 child: Container(
-                                  color: kBackgroundColor,
-                                  padding: EdgeInsets.symmetric(
+                                  color: gridViewColor,
+                                  padding: const EdgeInsets.symmetric(
                                     horizontal: 4,
                                     vertical: 2,
                                   ),
@@ -166,34 +191,37 @@ class _HomeScreenState extends State<HomeScreen> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      SizedBox(height: 5.17),
-                                      Text(
-                                        product.title,
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.black87,
-                                        ),
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-
-                                      Text(
-                                        '${product.storage} | ${product.color}',
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w400,
-                                          color: textColor,
+                                      const SizedBox(height: 3),
+                                      Flexible(
+                                        child: Text(
+                                          product.title,
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
+                                            color: textColor,
+                                          ),
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
                                         ),
                                       ),
-                                      SizedBox(height: 10),
+                                      Flexible(
+                                        child: Text(
+                                          '${product.storage} | ${product.color}',
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                            color: textColor,
+                                          ),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 5),
                                       Text(
                                         '\$${product.price}',
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontWeight: FontWeight.w700,
-                                          fontSize: 16,
+                                          fontSize: 14,
                                           color: textColor,
                                         ),
                                       ),
@@ -206,8 +234,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         );
                       },
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],
