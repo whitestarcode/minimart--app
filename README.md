@@ -18,5 +18,10 @@ After cloning the project:
 ```bash
 flutter pub get
 flutter run
-
+```
 <p float="left"> <img src="screenshots/screen1.png" width="200" alt="Screenshot 1"> <img src="screenshots/screen2.png" width="200" alt="Screenshot 2"> </p>
+
+![Alt text](screenshots/screenshot1.png)
+![Alt text](screenshots/screenshot2.png)
+![Alt text](screenshots/screenshot3.png)
+![Alt text](screenshots/screenshot4.png)
