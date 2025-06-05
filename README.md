@@ -1,16 +1,22 @@
 # minimart_app
 
-A new Flutter project.
+A new Flutter project — **Minimart Application**.
 
-## Getting Started
+## 📱 Overview
 
-This project is a starting point for a Flutter application.
+This is a Minimart application built with Flutter. It serves as a mobile app template for small retail or convenience store management.
 
-A few resources to get you started if this is your first Flutter project:
+## 🛠️ Tech Stack
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- **Framework:** [Flutter](https://flutter.dev)
+- **Language:** Dart
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🚀 Getting Started
+
+After cloning the project:
+
+```bash
+flutter pub get
+flutter run
+
+<p float="left"> <img src="screenshots/screen1.png" width="200" alt="Screenshot 1"> <img src="screenshots/screen2.png" width="200" alt="Screenshot 2"> </p>
